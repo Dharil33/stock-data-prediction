@@ -1,69 +1,135 @@
-import { Button, Input, Snackbar, useFormControl } from '@material-ui/core'
 import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+//import fire from './Firebase';
+//import fire from './fire';
+import {Redirect} from 'react-router-dom';
 
-function Register() {
+const Register = () => {
 
-    const [name, setname] = useState("")
-    const [password, setpassword] = useState("")
-    const [confirmpassword, setconfirmpassword] = useState("")
-    const [email, setemail] = useState("")
-    const [errormsg, seterrormsg] = useState("")
-    const [opensnackbar, setopensnackbar] = useState(false)
+    const [data, setData] = useState({
+        fullname: '',
+        phone: '',
+        email: '',
+        password: '',
+        cpassword: ''
+    });
+
+    const InputEvent = (event) => {
+        const { name, value } = event.target;
+        setData((preVal) => {
+            return {
+                ...preVal,
+                [name]: value,
+            };
+        });
+    };
 
 
-    const register = () => {
-        if (name === "" || name.length <= 1) {
-            setopensnackbar(true)
-                seterrormsg("Please Enter valid name")
+    const formSubmit = (e) => {
+        if (data.fullname == '') {
+            alert("Fill Full name");
         }
-        else if(email === "" ){
-            setopensnackbar(true)
-                seterrormsg("Please Enter valid email")
+        else if (data.phone == "") {
+            alert("Enter Phone Number and it must be 10 digits");
         }
-        else if(password === "" ){
-            setopensnackbar(true)
-                seterrormsg("Please Enter Password")
+        else if (data.phone.length != 10) {
+            alert("Phone number must be 10 digits");
         }
-        else if(password.length < 8){
-            setopensnackbar(true)
-            seterrormsg("Password should more than 8 character")
+        else if (data.email == "") {
+            alert("Enter Email");
         }
-        else if(confirmpassword.length < 8){
-            setopensnackbar(true)
-            seterrormsg("Enter valid confirm password")
+        else if (data.password == "") {
+            alert("Enter Password and it must be at least 7 characters");
         }
-        else if(confirmpassword !== password){
-            setopensnackbar(true)
-            seterrormsg("Both passwords should same")
+        else if (data.password.length < 7) {
+            alert("Password must be at least 8 characters");
         }
-        else{
-            //  register COde api call
+        else if (data.password != data.cpassword) {
+            alert("Password and Confirm Passowrd doesnot match");
+        }
+        else {
+            e.preventDefault();
+            toast.success(`Dear ${data.fullname} Your Message send Successfully`, {
+                position: "top-center",
+                color: "green",
+            });
         }
     }
+
+
+     /*const postdata = async (e) => {
+        e.preventDefault();
+
+        const {fullname, phone, email, password, cpassword} = data;
+
+       const res = await fetch("https://stockprediction-324a8-default-rtdb.firebaseio.com/mydatabase.json", {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(
+                fullname,
+                phone,
+                email,
+                password,
+                cpassword,
+            ),
+        })
+    }*/
+
+
     return (
-        <div>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                open={opensnackbar}
-                onClose={()=>setopensnackbar(false)}
-                message={errormsg}
-            />
-            <h2 style={{ textAlign: "center" }}>Register Yourself</h2>
-            <form name="f1"  >
-                <center>
-                    <div style={{ display: "flex", flexDirection: "column", width: "30%" }}>
-                        <Input placeholder="Enter Name" className="input-field" name="name" onChange={(e) => setname(e.target.value)} />
-                        <Input placeholder="Enter Email" className="input-field" name="email" onChange={(e) => setemail(e.target.value)} />
-                        <Input placeholder="Enter Password" type="password" className="input-field" name="pwd" onChange={(e) => setpassword(e.target.value)} />
-                        <Input placeholder="Confirm Password" type="password" className="input-field" name="cpwd" onChange={(e) => setconfirmpassword(e.target.value)} />
-                        <Button variant="contained" color="primary" onClick={register}  >Register</Button>
+        <>
+            <div className="my5">
+                <h1 className="text-center">Registration</h1>
+            </div>
+            <div className="container contact_div">
+                <div className="row">
+                    <div className="col-md-6 col-10 mx-auto">
+                        <form onSubmit={formSubmit}>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Full Name</label>
+                                <input type="text" className="form-control" id="exampleFormControlInput1" name="fullname"
+                                    value={data.fullname}
+                                    onChange={InputEvent} placeholder="Enter Your Full name" />
+                            </div>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Phone number</label>
+                                <input type="Number" className="form-control" id="exampleFormControlInput1" name="phone"
+                                    value={data.phone}
+                                    onChange={InputEvent} placeholder="Enter Phone Number" />
+                            </div>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Email address</label>
+                                <input type="email" className="form-control" id="exampleFormControlInput1" name="email"
+                                    value={data.email}
+                                    onChange={InputEvent} placeholder="name@example.com" />
+                            </div>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Password</label>
+                                <input type="password" className="form-control" id="exampleFormControlInput1" name="password"
+                                    value={data.password}
+                                    onChange={InputEvent} placeholder="Enter Your Password" />
+                            </div>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Confirm Password</label>
+                                <input type="password" className="form-control" id="exampleFormControlInput1" name="cpassword"
+                                    value={data.cpassword}
+                                    onChange={InputEvent} placeholder="Enter Confirm Password" />
+                            </div>
+                            <div className="col-12">
+                                <button className="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                            <br />
+                            <h5>Already have a Account?<a href="/Login" > Sign In</a></h5>
+                        </form>
                     </div>
-                </center>
-            </form>
-        </div>
+                </div>
+            </div>
+            <ToastContainer />
+            
+        </>
     )
 }
 

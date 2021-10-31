@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.input-field{
+  margin: 10px 0px;
+}
+form{
+  margin-top: 10%;
+}

@@ -1,49 +1,35 @@
-import React, { useEffect } from 'react'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React from 'react'
+import pic from "../src/images/grow.png"
 
-
-function Home() {
-
-    useEffect(()=>{
-        // Get USer APi call
-    },[])
-
-    const rows = [
-        createData('Ankit ', "Ankit@ankit.com"),
-        createData('Ankit ', "Ankit@ankit.com"),createData('Ankit ', "Ankit@ankit.com"),
-      ];
-      function createData(name, email) {
-        return { name, email };
-      }
+const Home = () => {
     return (
-        <div style={{display:"flex", alignContent:"center", flexDirection:"column", width:"100%"}}>
-           <h1>Home</h1> 
-           <TableContainer component={Paper} style={{width:"50%", }}>
-      <Table  aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <div>
+             <div>
+            <section id="header" className="d-flex align-items-center">
+            <div className="container-fluid">
+            <div className="row">
+                <div className="col-10 mx-auto">
+                    <div className="row">
+                    <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex justify-content-center flex-column">
+                        <h1>Welcome!!
+                        </h1>
+                        <h1>Grow Your Stock With <strong className="brand-name">Us</strong></h1>
+                        <h2 className="my-3">
+                            We are Making a <strong>Profit</strong>
+                        </h2>
+                        <div className="mt-3">
+                            <a href="/Register" className="btn-get-started">Get Started</a>
+                        </div>
+                    </div>
+                    <div className="col-lg-6 order-1 order-lg-2 header-img">
+                    <img src={pic} className="img-fluid animated" alt="growstock"/>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </section>
+        </div>
         </div>
     )
 }

@@ -1,13 +1,28 @@
-import './App.css';
-import Home from './Home';
-import Login from './Login';
-import Register from './Register';
-import { Router, Route } from 'react-router'
+import React from 'react'
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
+import "./App.css";
+import Register from "./Register"
+import Services from "./Services";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import Login from "./Login";
+import {Switch,Route,Redirect} from 'react-router-dom';
 
-function App() {
+
+const App = () => {
   return (
-      <p>Apppp</p>
-  );
+    <>
+       <Navbar/>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/Services" component={Services} />
+        <Route exact path="/Register" component={Register} />
+        <Route exact path="/Login" component={Login} />
+        <Redirect to="/" />
+      </Switch>
+    </>
+  )
 }
 
-export default App;
+export default App

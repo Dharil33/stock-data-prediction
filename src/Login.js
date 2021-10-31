@@ -1,54 +1,72 @@
-import React, { useState } from 'react'
-import { Button, Input, Snackbar } from '@material-ui/core'
+import React,{useState}from 'react'
 
-function Login() {
-    const [password, setpassword] = useState("")
-    const [email, setemail] = useState("")
-    const [errormsg, seterrormsg] = useState("")
-    const [opensnackbar, setopensnackbar] = useState(false)
-    
+const Login = () => {
 
-    const Login =()=>{
-        console.log(email,password);
-        if(email === "" ){
-            setopensnackbar(true)
-                seterrormsg("Please Enter valid email")
+    const [data,setData] = useState({
+        email:'',
+        password:'',
+    });
+
+    const InputEvent = (event)=>{
+        const {name,value} = event.target;
+        setData((preVal)=>{
+            return{
+                ...preVal,
+                [name]:value,
+            };
+        });
+    };
+
+    const formSubmit = (e)=>{
+        if(data.email=="")
+        {
+            alert("Enter Email");
         }
-        else if(password === "" ){
-            setopensnackbar(true)
-                seterrormsg("Please Enter Password")
+        else if(data.password=="")
+        {
+            alert("Enter Password");
         }
-        else if(password.length < 8){
-            setopensnackbar(true)
-            seterrormsg("Password should more than 8 character")
-        }
-        else{
-            //  login Code api call
+        else
+        {
+            e.preventDefault();
+        alert(`Logged in Successfully`);
         }
     }
-    return (
-        <div>
-        <h2 style={{textAlign:"center"}}>Login</h2>
 
-        <form autoComplete="off">
-            <center>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                open={opensnackbar}
-                onClose={()=>setopensnackbar(false)}
-                message={errormsg}
-            />
-            <div style={{display:"flex", flexDirection:"column", width:"30%"}}>
-        <Input placeholder="Enter Email" className="input-field" onChange={(e) => setemail(e.target.value)}/>  
-        <Input placeholder="Enter Password" type="password" className="input-field" onChange={(e) => setpassword(e.target.value)}/>  
-        <Button variant="contained" color="primary" onClick={Login} >Login</Button>
-        </div>
-        </center>
-        </form>
-    </div>
+
+    return (
+        <>
+            <div className="my5">
+                <h1 className="text-center">Sign In</h1>
+            </div>
+            <div className="container contact_div">
+                <div className="row">
+                    <div className="col-md-6 col-10 mx-auto">
+                        <form onSubmit={formSubmit}>
+                        <div className="mb-3">
+                        <label for="exampleFormControlInput1" className="form-label">Email address</label>
+                        <input type="email" className="form-control" id="exampleFormControlInput1" name="email"
+                        value={data.email}
+                        onChange={InputEvent} placeholder="name@example.com"/>
+                        </div>
+                        <div className="mb-3">
+                        <label for="exampleFormControlInput1" className="form-label">Password</label>
+                        <input type="password" className="form-control" id="exampleFormControlInput1" name="password"
+                        value={data.password}
+                        onChange={InputEvent} placeholder="Enter Your Password"/>
+                        </div>
+                        <p><a href="#">Forgot Password?</a></p>
+                        <div className="col-12">
+                            <button className="btn btn-primary" type="submit">
+                                Login
+                            </button>
+                        </div>
+                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 
